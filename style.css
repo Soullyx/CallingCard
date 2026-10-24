@@ -1,0 +1,251 @@
+/* ==========================================================================
+   1. ОБЩИЕ СТИЛИ (Шрифты, сброс отступов и фоны)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Рекомендуется подключить через Google Fonts шрифт 'Inter' или 'Impact' */
+    font-family: 'Arial Black', 'Impact', sans-serif; 
+}
+
+body {
+    background-color: #0D0D0D; /* Фирменный глубокий темно-серый/черный фон */
+    color: #FFFFFF;
+}
+
+/* ==========================================================================
+   2. СТИЛИ ДЛЯ ПЕРВОЙ СТРАНИЦЫ (Входной экран index.html)
+   ========================================================================== */
+.welcome-screen {
+    background-color: #D30000; /* Ярко-красный фон как на вашем первом фрейме */
+    background-image: url('ps5.png'); background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Черная плашка для текста "магазин одягу" */
+.brand-info h1 {
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 15px 30px;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    transform: rotate(-3deg); 
+    display: inline-block;
+}
+
+.hero-section {
+    margin-top: 50px;
+    text-align: center;
+}
+
+/* Текст CALLING CARD */
+.title-calling {
+    font-size: 5rem;
+    color: #FFFFFF;
+    text-shadow: 4px 4px 0px #000000;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+/* Кнопка CATALOG (Переход на вторую страницу) */
+.btn-catalog {
+    display: inline-block;
+    background-color: #000000;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 20px 60px;
+    font-size: 2.5rem;
+    border: 4px solid #FFFFFF;
+    letter-spacing: 5px;
+    transition: transform 0.1s ease, background-color 0.2s;
+    cursor: pointer;
+}
+
+/* Эффект при наведении на кнопку CATALOG */
+.btn-catalog:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+    border-color: #000000;
+    transform: scale(1.05) rotate(2deg); /* Кнопка динамично увеличивается и наклоняется */
+}
+
+
+/* ==========================================================================
+   3. СТИЛИ ДЛЯ ВТОРОЙ СТРАНИЦЫ (Каталог товаров catalog.html)
+   ========================================================================== */
+
+/* Фоновое изображение специально для страницы каталога */
+body.catalog-page {
+    background-image: url('shop.png'); /* Имя вашего файла с фоном/персонажем */
+    background-repeat: no-repeat;
+    background-position: right bottom; /* Картинка прижмется к правому нижнему углу */
+    background-size: contain; /* Картинка полностью поместится по высоте/ширине и не обрежется */
+    background-attachment: fixed; /* Фон будет красиво оставаться на месте при прокрутке товаров */
+}
+
+
+/* Шапка сайта */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 2px solid #333333;
+    background-color: #000000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.header-menu button {
+    background: transparent;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    padding: 8px 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.header-menu button:hover {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+/* Главный контейнер каталога (Сетка из двух частей: фильтры + товары) */
+.catalog-container {
+    display: flex;
+    padding: 40px;
+    gap: 40px;
+}
+
+/* Боковая панель фильтров */
+.sidebar-filters {
+    width: 250px;
+    flex-shrink: 0;
+}
+
+.sidebar-filters h3 {
+    border: 2px solid #FFFFFF;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    background: #000000;
+}
+
+.categories-list {
+    list-style: none;
+}
+
+.categories-list li {
+    padding: 12px 15px;
+    background: #141414;
+    margin-bottom: 8px;
+    border-left: 5px solid #D30000; /* Красный акцент слева */
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.categories-list li:hover {
+    background: #D30000;
+    color: #000000;
+}
+
+/* Правая часть с контентом */
+.catalog-content {
+    flex-grow: 1;
+}
+
+.page-title {
+    font-size: 4rem;
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+}
+
+/* ТРИ КОЛОНКИ ДЛЯ ТОВАРОВ (CSS Grid) */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Ровно 3 колонки как в Figma */
+    gap: 30px;
+}
+
+/* Стилизация карточки товара в стиле Persona 5 */
+.product-card {
+    background-color: #000000;
+    border: 3px solid #FFFFFF;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    border-color: #D30000; /* При наведении рамка становится красной */
+}
+
+/* Белая контрастная плашка NEW / BESTSELLER */
+.badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* Место под картинку одежды */
+.product-img-placeholder {
+    width: 100%;
+    height: 250px;
+    background-color: #1A1A1A;
+    margin-bottom: 15px;
+    border: 1px solid #333333;
+    /* Если у вас есть картинка, вы можете добавить её сюда через background-image: url('photo.jpg'); */
+    background-size: cover;
+    background-position: center;
+}
+
+.product-name {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    color: #D30000; /* Выделяем цену красным цветом */
+    margin-bottom: 15px;
+}
+
+/* Кнопка купить внутри карточки */
+.add-to-bag-btn {
+    background: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+}
+
+.add-to-bag-btn:hover {
+    background: #FFFFFF;
+    color: #000000;
+}
