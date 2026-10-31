@@ -1,0 +1,21 @@
+[
+  { "id": 1, "title": "REBEL PARKA", "price": 185, "image": "jaket1.png", "category": "jackets" },
+  { "id": 2, "title": "JAKET RED", "price": 150, "image": "jaket2.png", "category": "jackets" },
+  { "id": 3, "title": "SHUJIN ACADEMY BLAZER", "price": 210, "image": "jaket3.png", "category": "jackets" },
+  { "id": 4, "title": "PHANTOM WINDbreaker", "price": 135, "image": "jaket4.png", "category": "jackets" },
+
+  { "id": 5, "title": "STEAL YOUR HEART T-SHIRT", "price": 45, "image": "tshirt.png", "category": "t-shirts" },
+  { "id": 6, "title": "TAKE YOUR TIME TEE", "price": 40, "image": "tshirt2.png", "category": "t-shirts" },
+  { "id": 7, "title": "SHUJIN CASUAL SHIRT", "price": 55, "image": "tshirt3.png", "category": "t-shirts" },
+  { "id": 8, "title": "REBEL LOGO OVERSIZE", "price": 50, "image": "tshirt4.png", "category": "t-shirts" },
+
+  { "id": 9, "title": "SHUJIN UNIFORM PANTS", "price": 85, "image": "pants1.png", "category": "pants" },
+  { "id": 10, "title": "PERSONA X PERDUN COLLAB PANTS", "price": 1488, "image": "pants2.png", "category": "pants" },
+  { "id": 11, "title": "REBEL CARGO PANTS", "price": 95, "image": "pants3.png", "category": "pants" },
+  { "id": 12, "title": "STYLISH RED SLIM PANTS", "price": 90, "image": "pants4.png", "category": "pants" },
+
+  { "id": 13, "title": "PHANTOM BAG", "price": 95, "image": "aks3.png", "category": "accessories" },
+  { "id": 14, "title": "META-NAV CONSOLE", "price": 499, "image": "aks2.png", "category": "accessories" },
+  { "id": 15, "title": "CALLING CARD BACKPACK", "price": 15, "image": "aks1.png", "category": "accessories" },
+  { "id": 16, "title": "JOKER'S MASQUERADE MASK", "price": 30, "image": "aks4.png", "category": "accessories" }
+]

@@ -12,8 +12,10 @@
     <header class="site-header">
         <div class="logo">PHANTOM STYLE</div>
         <div class="header-menu">
-            <button class="search-btn">SEARCH</button>
-            <button class="bag-btn">BAG (0)</button>
+            <!-- Кнопці пошуку додано функцію onclick для виклику prompt-вікна -->
+            <button class="search-btn" onclick="searchProducts()" style="cursor: pointer;">SEARCH</button>
+            <!-- Добавлен span с id="cart-counter" для отображения количества товаров -->
+            <button class="bag-btn">BAG (<span id="cart-counter">0</span>)</button>
         </div>
     </header>
 
@@ -22,12 +24,14 @@
         
         <!-- Левая панель с фильтрами -->
         <aside class="sidebar-filters">
-            <h3>FILTERS</h3>
+            <!-- Клик на заголовок FILTERS сбросит фильтр и покажет абсолютно все 16 товаров -->
+            <h3 onclick="filterProducts('all')" style="cursor: pointer;">FILTERS</h3>
             <ul class="categories-list">
-                <li>JACKETS</li>
-                <li>T-SHIRTS</li>
-                <li>PANTS</li>
-                <li>ACCESSORIES</li>
+                <!-- Каждому пункту меню добавлена функция фильтрации по клику -->
+                <li onclick="filterProducts('jackets')" style="cursor: pointer;">JACKETS</li>
+                <li onclick="filterProducts('t-shirts')" style="cursor: pointer;">T-SHIRTS</li>
+                <li onclick="filterProducts('pants')" style="cursor: pointer;">PANTS</li>
+                <li onclick="filterProducts('accessories')" style="cursor: pointer;">ACCESSORIES</li>
             </ul>
         </aside>
 
@@ -35,25 +39,43 @@
         <main class="catalog-content">
             <h1 class="page-title">CATALOG</h1>
 
-            <!-- Сетка, где будут располагаться карточки одежды -->
-            <section class="products-grid">
-                
-                <!-- Пример одной карточки товара -->
-                <article class="product-card">
-                    <span class="badge">NEW</span>
-                    <!-- Сюда вы позже вставите свою картинку одежды -->
-                    <div class="product-img-placeholder"></div> 
-                    <h4 class="product-name">REBEL PARKA</h4>
-                    <p class="product-price">$185</p>
-                    <button class="add-to-bag-btn">ADD TO BAG</button>
-                </article>
-
-                <!-- Вы можете скопировать блок <article> еще несколько раз для других товаров -->
-
+            <section class="products-grid" id="products-container">
+                <!-- Товары загрузятся автоматически при открытии страницы через Live Server -->
             </section>
         </main>
 
     </div>
 
+    <!-- Модальное окно корзины (вставлять перед <script src="app.js"></script>) -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h2>YOUR BAG</h2>
+                <span class="close-modal" onclick="toggleCart(false)">&times;</span>
+            </div>
+            
+            <!-- Сюда JS будет динамически добавлять строки с выбранными товарами -->
+            <div id="cart-items-container" class="cart-items-list">
+                <!-- Если пусто, JS напишет: YOUR BAG IS EMPTY -->
+            </div>
+            
+            <div class="cart-modal-footer">
+                <div class="cart-total">
+                    <span>TOTAL:</span>
+                    <span id="cart-total-price">$0</span>
+                </div>
+                <button class="checkout-btn" onclick="checkoutOrder()">PROCEED TO CHECKOUT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- На кнопку BAG вешаем событие открытия корзины -->
+    <script>
+        document.querySelector('.bag-btn').setAttribute('onclick', 'toggleCart(true)');
+        document.querySelector('.bag-btn').style.cursor = 'pointer';
+    </script>
+
+    <!-- Подключаем JavaScript-логику (обязательно перед закрывающим тегом body) -->
+    <script src="app.js"></script>
 </body>
 </html>
