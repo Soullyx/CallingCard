@@ -55,6 +55,7 @@ function renderProducts(productsList) {
     container.innerHTML = ''; 
 
     productsList.forEach(product => {
+        // Передаем 'this' в функцию addToCart(productId, buttonElement)
         const cardHtml = `
             <article class="product-card">
                 <span class="badge">NEW</span>
@@ -63,7 +64,7 @@ function renderProducts(productsList) {
                 </div> 
                 <h4 class="product-name">${product.title}</h4>
                 <p class="product-price">$${product.price}</p>
-                <button class="add-to-bag-btn" onclick="addToCart(${product.id})">ADD TO BAG</button>
+                <button class="add-to-bag-btn" onclick="addToCart(${product.id}, this)">ADD TO BAG</button>
             </article>
         `;
         container.insertAdjacentHTML('beforeend', cardHtml);
@@ -71,7 +72,20 @@ function renderProducts(productsList) {
 }
 
 // 4. Умная добавление товара в корзину (сохраняет ссылку на картинку для попапа)
-function addToCart(productId) {
+function addToCart(productId, buttonElement) {
+    // Временное изменение состояния кнопки при клике
+    if (buttonElement && !buttonElement.classList.contains('added')) {
+        buttonElement.classList.add('added');
+        const originalText = buttonElement.textContent;
+        buttonElement.textContent = '✓ ADDED';
+
+        // Возвращаем кнопку в исходное положение через 2 секунды
+        setTimeout(() => {
+            buttonElement.classList.remove('added');
+            buttonElement.textContent = originalText;
+        }, 2000);
+    }
+
     const existingProduct = cart.find(item => item.id === productId);
 
     if (existingProduct) {
