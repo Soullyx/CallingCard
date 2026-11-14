@@ -435,3 +435,117 @@ body.catalog-page {
     color: #ffffff !important;
     pointer-events: none; /* Защита от повторного нажатия, пока горит надпись */
 }
+
+.header-menu {
+    display: flex;
+    align-items: center;
+}
+
+.search-container {
+    display: inline-flex;
+    align-items: center;
+}
+
+.search-input {
+    background: transparent;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    padding: 8px 16px;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    font-size: 13.33px;
+    font-weight: bold;
+    text-transform: uppercase;
+    outline: none;
+    width: 160px;
+    transition: all 0.2s ease;
+}
+
+.search-input::placeholder {
+    color: #888888;
+}
+
+.search-input:focus {
+    background: #FFFFFF;
+    color: #000000;
+    border-color: #D30000;
+    width: 220px;
+}
+
+.search-input:focus::placeholder {
+    color: #555555;
+}
+
+/* ==========================================================================
+   ОКНО ОФОРМЛЕНИЯ ЗАКАЗА (CHECKOUT MODAL)
+   ========================================================================== */
+.checkout-form {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+}
+
+.form-group input {
+    width: 100%; /* Розтягує поле рівно на всю ширину батьківського блоку */
+    background-color: #1A1A1A;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    padding: 10px 12px;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 0; /* Дозволяє колонкам стискатися і не виходити за рамку */
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Стиль для кнопки оформления заказа (если еще не задан) */
+.checkout-btn {
+    width: 100%;
+    background-color: #FF0000;
+    color: #FFFFFF;
+    border: none;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px #FFFFFF;
+    transition: transform 0.1s, background-color 0.2s;
+}
+
+.checkout-btn:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+    box-shadow: 4px 4px 0px #FF0000;
+}

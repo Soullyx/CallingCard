@@ -55,7 +55,6 @@ function renderProducts(productsList) {
     container.innerHTML = ''; 
 
     productsList.forEach(product => {
-        // Передаем 'this' в функцию addToCart(productId, buttonElement)
         const cardHtml = `
             <article class="product-card">
                 <span class="badge">NEW</span>
@@ -71,15 +70,13 @@ function renderProducts(productsList) {
     });
 }
 
-// 4. Умная добавление товара в корзину (сохраняет ссылку на картинку для попапа)
+// 4. Умное добавление товара в корзину
 function addToCart(productId, buttonElement) {
-    // Временное изменение состояния кнопки при клике
     if (buttonElement && !buttonElement.classList.contains('added')) {
         buttonElement.classList.add('added');
         const originalText = buttonElement.textContent;
         buttonElement.textContent = '✓ ADDED';
 
-        // Возвращаем кнопку в исходное положение через 2 секунды
         setTimeout(() => {
             buttonElement.classList.remove('added');
             buttonElement.textContent = originalText;
@@ -103,7 +100,6 @@ function addToCart(productId, buttonElement) {
         }
     }
 
-    // Сохраняем изменения в Cookies и перерисовываем интерфейс
     saveJsonCookie('shopping_cart', cart);
     updateCartUI(); 
 }
@@ -123,7 +119,6 @@ function changeQuantity(productId, delta) {
 
     product.quantity += delta;
 
-    // Если количество упало до нуля, полностью убираем позицию
     if (product.quantity <= 0) {
         removeFromCart(productId);
         return;
@@ -133,29 +128,26 @@ function changeQuantity(productId, delta) {
     updateCartUI();
 }
 
-// Полное удаление товара из корзины по нажатию на крестик
+// Полное удаление товара из корзины
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
     saveJsonCookie('shopping_cart', cart);
     updateCartUI();
 }
 
-// 5. Динамическое обновление счетчика BAG и рендеринг списка внутри модального окна
+// 5. Динамическое обновление счетчика BAG и рендеринг списка
 function updateCartUI() {
-    // 1. Обновляем цифру на главной кнопке в хедере
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const counterElement = document.getElementById('cart-counter');
     if (counterElement) {
         counterElement.textContent = totalItems;
     }
 
-    // 2. Находим узлы контейнера списка товаров и итоговой цены в попапе
     const itemsContainer = document.getElementById('cart-items-container');
     const totalPriceElement = document.getElementById('cart-total-price');
     
     if (!itemsContainer) return;
 
-    // Если корзина очищена
     if (cart.length === 0) {
         itemsContainer.innerHTML = `<div class="empty-cart-msg">YOUR BAG IS EMPTY</div>`;
         if (totalPriceElement) totalPriceElement.textContent = "$0";
@@ -165,7 +157,6 @@ function updateCartUI() {
     itemsContainer.innerHTML = '';
     let totalOrderPrice = 0;
 
-    // Генерируем строки товаров с кнопками управления количеством и удалением
     cart.forEach(item => {
         const itemTotalPrice = item.price * item.quantity;
         totalOrderPrice += itemTotalPrice;
@@ -193,18 +184,75 @@ function updateCartUI() {
     }
 }
 
-// Симуляция клика по оплате (очистка корзины после успешного оформления)
+// Открытие окна оформления заказа при нажатии PROCEED TO CHECKOUT
 function checkoutOrder() {
-    if (cart.length === 0) return;
-    alert("ORDER PROCEEDED! THE PHANTOM THIEVES WILL DELIVER IT.");
+    if (cart.length === 0) {
+        alert("YOUR BAG IS EMPTY!");
+        return;
+    }
+
+    // Считаем общую сумму и передаем её в окно оплаты
+    const totalOrderPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const checkoutTotalElement = document.getElementById('checkout-total-price');
+    if (checkoutTotalElement) {
+        checkoutTotalElement.textContent = `$${totalOrderPrice}`;
+    }
+
+    // Закрываем корзину и открываем форму заказа
+    toggleCart(false);
+    toggleCheckout(true);
+}
+
+// Управление видимостью окна оформления заказа
+function toggleCheckout(isOpen) {
+    const modal = document.getElementById('checkout-modal');
+    if (modal) {
+        modal.style.display = isOpen ? 'flex' : 'none';
+    }
+}
+
+// Обработка отправки формы заказа
+function submitOrder(event) {
+    event.preventDefault(); // Отменяем перезагрузку страницы
+
+    alert("ORDER CONFIRMED! THE PHANTOM THIEVES WILL DELIVER IT SOON.");
+
+    // Очищаем корзину, сохраняем в Cookies и сбрасываем форму
     cart = [];
     saveJsonCookie('shopping_cart', cart);
     updateCartUI();
-    toggleCart(false);
+    document.getElementById('checkout-form').reset();
+    toggleCheckout(false);
+}
+
+// Автоматическое форматирование номера карты (пробелы каждые 4 цифры) и срока действия (MM/YY)
+const cardInput = document.getElementById('order-card');
+if (cardInput) {
+    cardInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+    });
+}
+
+const expiryInput = document.getElementById('order-expiry');
+if (expiryInput) {
+    expiryInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2, 4);
+        }
+        e.target.value = value;
+    });
 }
 
 // 6. Логика фильтрации товаров по клику на боковое меню
 function filterProducts(categoryName) {
+    // Очищаем поле поиска при выборе категории
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.value = '';
+    }
+
     if (categoryName === 'all') {
         renderProducts(products);
     } else {
@@ -213,35 +261,32 @@ function filterProducts(categoryName) {
     }
 }
 
-// 7. Функция для поиска товаров по названию
-function searchProducts() {
-    const searchQuery = prompt("Введите название товара для поиска:");
-    if (searchQuery === null) return;
-    
-    const cleanQuery = searchQuery.trim().toLowerCase();
-    
-    if (cleanQuery === "") {
-        renderProducts(products);
-        return;
-    }
+// 7. Живой поиск товаров прямо в шапке сайта
+const searchInput = document.getElementById('searchInput');
 
-    const searchResults = products.filter(product => 
-        product.title.toLowerCase().includes(cleanQuery)
-    );
+if (searchInput) {
+    searchInput.addEventListener('input', function () {
+        const cleanQuery = this.value.trim().toLowerCase();
 
-    if (searchResults.length > 0) {
-        renderProducts(searchResults);
-    } else {
-        const container = document.getElementById('products-container');
-        if (container) {
-            container.innerHTML = `
-                <div style="color: #fff; font-family: monospace; font-size: 20px; padding: 20px; text-transform: uppercase; grid-column: 1/-1; text-align: center;">
-                    NOTHING FOUND... THE PHANTOMS TOOK IT!
-                </div>
-            `;
+        if (cleanQuery === "") {
+            renderProducts(products);
+            return;
         }
-    }
+
+        const searchResults = products.filter(product =>
+            product.title.toLowerCase().includes(cleanQuery)
+        );
+
+        if (searchResults.length > 0) {
+            renderProducts(searchResults);
+        } else {
+            const container = document.getElementById('products-container');
+            if (container) {
+                container.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; font-size: 1.5rem; padding: 40px;">NOTHING FOUND</p>`;
+            }
+        }
+    });
 }
 
-// Запуск приложения
-document.addEventListener('DOMContentLoaded', loadProducts);
+// Запуск загрузки товаров при открытии страницы
+loadProducts();
